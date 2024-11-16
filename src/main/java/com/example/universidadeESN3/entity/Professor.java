@@ -1,9 +1,6 @@
 package com.example.universidadeESN3.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -15,4 +12,18 @@ public class Professor {
     private Long id;
     private Long matricula;
     private String nome;
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
+
+    private Boolean active;
+
+    @Override
+    public String toString() {
+        return "Aluno{" +
+                "id=" + id +
+                ", matricula=" + matricula +
+                ", nome='" + nome + '\'' +
+                ", genero=" + genero +
+                '}';
+    }
 }
