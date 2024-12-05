@@ -38,9 +38,9 @@ public class ProfessorService implements IProfessorService {
     }
 
     @Override
-    public void atualizar(Professor professor) {
-        log.info("atualizar() - professor:{}", professor );
-        professorRepository.save(professor);
+    public Professor atualizar(Professor professor) {
+        log.info("atualizar() - Atualizando professor: {}", professor);
+        return professorRepository.save(professor); // Atualiza ou salva, baseado no ID
     }
 
     @Override
@@ -50,11 +50,14 @@ public class ProfessorService implements IProfessorService {
 
     public void desativar(Professor professor) {
         professor.setActive(Boolean.FALSE);
-        professorRepository.save(professor);
-    }
+       professorRepository.save(professor);
+   }
 
     public List<Professor> buscarPorNome(String nome) {
-     //  return professorRepository.findByNome(nome);
-        return professorRepository.findByNomeStartingWithIgnoreCase(nome);
+        log.info("buscarPorNome() - nome: {}", nome);
+        return professorRepository.findByNomeIgnoreCaseContaining(nome);
     }
+
+
+
 }

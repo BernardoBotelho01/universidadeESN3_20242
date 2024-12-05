@@ -14,7 +14,6 @@ public class Aluno {
     private String nome;
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
     private Boolean active;
 
     @Override
@@ -24,6 +23,7 @@ public class Aluno {
                 ", matricula=" + matricula +
                 ", nome='" + nome + '\'' +
                 ", genero=" + genero +
+                ", active=" + active +
                 '}';
     }
 }

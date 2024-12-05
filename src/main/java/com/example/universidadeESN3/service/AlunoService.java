@@ -1,10 +1,10 @@
 package com.example.universidadeESN3.service;
 
 import com.example.universidadeESN3.entity.Aluno;
+import com.example.universidadeESN3.entity.Professor;
 import com.example.universidadeESN3.repository.AlunoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +26,7 @@ public class AlunoService implements IAlunoService {
         return null;
     }
 
+
     @Override
     public List<Aluno> buscarTodos() {
         return alunoRepository.findAll();
@@ -38,9 +39,10 @@ public class AlunoService implements IAlunoService {
     }
 
     @Override
-    public void atualizar(Aluno aluno) {
+    public Aluno atualizar(Aluno aluno) {
         log.info("atualizar() - aluno:{}", aluno );
         alunoRepository.save(aluno);
+        return aluno;
     }
 
     @Override
@@ -54,7 +56,6 @@ public class AlunoService implements IAlunoService {
     }
 
     public List<Aluno> buscarPorNome(String nome) {
-//        return alunoRepository.findByNome(nome);
         return alunoRepository.findByNomeStartingWithIgnoreCase(nome);
     }
 }

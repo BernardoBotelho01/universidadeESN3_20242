@@ -1,6 +1,7 @@
 package com.example.universidadeESN3.controller;
 
 import com.example.universidadeESN3.entity.Aluno;
+import com.example.universidadeESN3.entity.Professor;
 import com.example.universidadeESN3.service.AlunoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +36,13 @@ public class AlunoController {
     }
 
     @GetMapping(path = "/nome/{nome}")
-    public ResponseEntity<List<Aluno>> buscarPorNome(@PathVariable String nome){
-
+    public ResponseEntity<?> buscarPorNome(@PathVariable String nome){
+        log.info("buscarPorNome() - nome: {}", nome);
         List<Aluno> response = alunoService.buscarPorNome(nome);
         if (response != null && !response.isEmpty()) {
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.ok(new ArrayList<>());
+        return ResponseEntity.status(404).body("Nenhum Aluno encontrado com o nome especificado");
     }
 
     @PostMapping
@@ -50,15 +51,25 @@ public class AlunoController {
         return ResponseEntity.ok(alunoService.salvar(aluno));
     }
 
-    @PutMapping()
-    public ResponseEntity<?> update(@RequestBody Aluno aluno){
-
-        Aluno response = alunoService.buscarPorId(aluno.getId());
-        if (response == null) {
-            return ResponseEntity.notFound().build();
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> update(@PathVariable Long id, @RequestBody Aluno aluno) {
+        // Verificar se o Aluno existe no banco de dados pelo ID fornecido na URL
+        Aluno existente = alunoService.buscarPorId(id);
+        if (existente == null) {
+            return ResponseEntity.notFound().build(); // Retorna 404 se não encontrado
         }
-        alunoService.atualizar(aluno);
-        return ResponseEntity.ok(null);
+
+        // Atualizar os campos do Aluno existente com os valores do objeto recebido
+        existente.setMatricula(aluno.getMatricula());
+        existente.setNome(aluno.getNome());
+        existente.setGenero(aluno.getGenero());
+        existente.setActive(aluno.getActive());
+
+        // Salvar o Aluno atualizado no banco de dados
+        Aluno atualizado = alunoService.atualizar(existente);
+
+        // Retornar o Aluno atualizado
+        return ResponseEntity.ok(atualizado);
     }
 
     @DeleteMapping("/{id}")

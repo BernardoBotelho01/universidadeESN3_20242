@@ -11,7 +11,7 @@ public interface IAlunoService {
 
     Aluno salvar(Aluno aluno);
 
-    void atualizar(Aluno aluno);
+    Aluno atualizar(Aluno aluno);
 
     void excluir(Long id);
 }

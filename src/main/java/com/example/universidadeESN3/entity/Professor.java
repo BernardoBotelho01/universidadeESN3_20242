@@ -10,20 +10,21 @@ public class Professor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long matricula;
     private String nome;
     @Enumerated(EnumType.STRING)
     private Genero genero;
-
+    private String disciplina;
     private Boolean active;
 
     @Override
     public String toString() {
-        return "Aluno{" +
+        return "Professor{" +
                 "id=" + id +
-                ", matricula=" + matricula +
                 ", nome='" + nome + '\'' +
                 ", genero=" + genero +
+                ", disciplina='" + disciplina + '\'' +
+                ", active=" + active +
                 '}';
     }
 }
+
